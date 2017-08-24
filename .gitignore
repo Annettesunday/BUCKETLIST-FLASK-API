@@ -1,2 +1,4 @@
 Venv/
 migrations/
+.env
+*.pyc
