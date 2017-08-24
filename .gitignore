@@ -1,4 +1,7 @@
 Venv/
 migrations/
 .env
-*.pyc
+.cache/
+__pycache__/
+*.pyc 
+.pyc/
