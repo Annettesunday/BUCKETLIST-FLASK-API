@@ -96,4 +96,16 @@ def delete_bucketlist(current_user, bucketlistID):
         res = {"msg": "You have deleted a bucketlist successfully"}
         return jsonify(res)
 
-
+@app.route('/bucketlist/<bucketlistID>', methods=['PUT'])
+@token_required
+def edit_bucketlist(current_user, bucketlistID):
+    newname = request.form.get('newname')
+    name = Bucketlist.query.filter_by(id=bucketlistID, owner_id=current_user.id).first()
+    if not name:
+        res = {"msg": "Bucketlist not found"}
+        return jsonify(res)
+    else:
+        name.name = newname
+        db.session.commit()
+        res = {"msg": "Bucketlistname has been updated"}
+        return jsonify(res), 200
