@@ -123,3 +123,19 @@ def get_bucketlist(current_user, bucketlistID):
         bucketlist_dict['bucketlist_id'] = name.id
         bucketlist_dict['name'] = name.name
         return jsonify(bucketlist_dict)
+
+@app.route('/bucketlist', methods=['GET'])
+@token_required
+def get_all_bucketlists(current_user):
+    names = Bucketlist.query.filter_by(owner_id=current_user.id).all()
+    bucket_list =[]
+    for name in  names:
+        allbucketlists_dict = {}
+        allbucketlists_dict['owner_id'] = name.owner_id
+        allbucketlists_dict['name'] = name.name
+        allbucketlists_dict['bucketlist_id'] = name.id
+        bucket_list.append(allbucketlists_dict)
+    print(bucket_list)    
+    return jsonify(bucket_list)
+    
+
