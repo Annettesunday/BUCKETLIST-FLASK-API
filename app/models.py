@@ -41,8 +41,9 @@ class BucketlistItem(db.Model):
     description = db.Column(db.String(225))
     bucketlist_id = db.Column(db.Integer, db.ForeignKey('bucketlists.id'))
 
-    def __init__(self, description):
+    def __init__(self, description, bucketlist_id):
         self.description = description
+        self.bucketlist_id = bucketlist_id
 
     def __repr__(self):
         return '<Item %r belongs to>' % (self.title)

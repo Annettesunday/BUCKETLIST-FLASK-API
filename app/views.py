@@ -1,7 +1,7 @@
 from werkzeug.security import generate_password_hash, check_password_hash
 from app import app, db
 from flask import request, jsonify
-from app.models import User, Bucketlist
+from app.models import User, Bucketlist, BucketlistItem
 import jwt
 import datetime
 from app import config
@@ -137,5 +137,19 @@ def get_all_bucketlists(current_user):
         bucket_list.append(allbucketlists_dict)
     print(bucket_list)    
     return jsonify(bucket_list)
+
+@app.route('/bucketlist/<bucketlistID>/items', methods=['POST'])
+@token_required
+def add_item(current_user, bucketlistID):
+    description = request.form.get('description')
+    if not description :
+        res = {"msg": "Please provide the itemname"}
+        return jsonify(res)
+    else:
+        description = BucketlistItem(description=description, bucketlist_id=bucketlistID)
+        db.session.add(description)
+        db.session.commit()
+        res = {"msg": "bucketlistitem added successfully"}
+        return jsonify(res)
     
 
