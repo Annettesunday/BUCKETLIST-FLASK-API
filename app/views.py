@@ -6,7 +6,7 @@ import jwt
 import datetime
 from app import config
 from functools import wraps
-from flask_login import current_user
+from flask_login import current_user, UserMixin
 
 @app.route('/auth/home')
 def welcome():
@@ -29,7 +29,7 @@ def token_required(k):
 
         except:
             return jsonify({"msg": "Token is invalid"})
-        return k(current_user *args, **kwargs)
+        return k(current_user, *args, **kwargs)
 
     return decorated
 
@@ -68,28 +68,32 @@ def login():
              token = jwt.encode({'name':name, 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)}, app.config['SECRET'])
              return jsonify({'token': token.decode('UTF-8')}), 202
 
-@token_required
 @app.route('/bucketlist', methods=['POST'])
-def create_bucketlist():
+@token_required
+def create_bucketlist(current_user):
     name = request.form.get('name')
     if not name :
         res = {"msg": "Please provide the bucketlistname"}
         return jsonify(res)
     else:
-        bucketlist = Bucketlist(name=name)
+        bucketlist = Bucketlist(name=name, owner_id=current_user.id)
         db.session.add(bucketlist)
         db.session.commit()
         res = {"msg": "bucketlist added successfully"}
         return jsonify(res)
     
 
+@app.route('/bucketlist/<bucketlistID>', methods=['DELETE'])
+@token_required
+def delete_bucketlist(current_user, bucketlistID):
+    name = Bucketlist.query.filter_by(id=bucketlistID, owner_id=current_user.id).first()
+    if not name:
+        res = {"msg": "Bucketlist not found"}
+        return jsonify(res)
+    else:
+        db.session.delete(name)
+        db.session.commit()
+        res = {"msg": "You have deleted a bucketlist successfully"}
+        return jsonify(res)
 
 
-
-
-    
-            
-        
-    
-   
-     
