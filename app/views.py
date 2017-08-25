@@ -109,3 +109,17 @@ def edit_bucketlist(current_user, bucketlistID):
         db.session.commit()
         res = {"msg": "Bucketlistname has been updated"}
         return jsonify(res), 200
+
+@app.route('/bucketlist/<bucketlistID>', methods=['GET'])
+@token_required
+def get_bucketlist(current_user, bucketlistID):
+    name = Bucketlist.query.filter_by(id=bucketlistID, owner_id=current_user.id).first()
+    if not name:
+        res = {"msg": "Bucketlist not found"}
+        return jsonify(res)
+    else:
+        bucketlist_dict = {}
+        bucketlist_dict['owner_id'] = name.owner_id
+        bucketlist_dict['bucketlist_id'] = name.id
+        bucketlist_dict['name'] = name.name
+        return jsonify(bucketlist_dict)
