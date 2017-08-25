@@ -151,5 +151,21 @@ def add_item(current_user, bucketlistID):
         db.session.commit()
         res = {"msg": "bucketlistitem added successfully"}
         return jsonify(res)
+
+@app.route('/bucketlist/<bucketlistID>/items/<itemID>', methods=['DELETE'])
+@token_required
+def delete_item(current_user, bucketlistID, itemID):
+    description = BucketlistItem.query.filter_by(id=itemID, bucketlist_id=bucketlistID).first()
+    if not description:
+        res = {"msg": "Bucketlistitem not found"}
+        return jsonify(res)
+    else:
+        db.session.delete(description)
+        db.session.commit()
+        res = {"msg": "You have deleted a bucketlistitem successfully"}
+        return jsonify(res)
+
+
+
     
 
