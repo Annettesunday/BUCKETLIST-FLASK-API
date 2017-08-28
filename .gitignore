@@ -3,5 +3,6 @@ migrations/
 .env
 .cache/
 __pycache__/
-.pyc 
+*.py[cod]
+*$py.class 
 .vscode/
