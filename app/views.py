@@ -107,7 +107,7 @@ def delete_bucketlist(current_user, bucketlistID):
 @app.route('/bucketlist/<bucketlistID>', methods=['PUT'])
 @token_required
 def edit_bucketlist(current_user, bucketlistID):
-    newname = request.form.get('newname')
+    newname = request.json.get('newname')
     name = Bucketlist.query.filter_by(id=bucketlistID, owner_id=current_user.id).first()
     if not name:
         res = {"msg": "Bucketlist not found"}
@@ -135,6 +135,18 @@ def get_bucketlist(current_user, bucketlistID):
 @app.route('/bucketlist', methods=['GET'])
 @token_required
 def get_all_bucketlists(current_user):
+    search = request.args.get("q")
+    if search:
+        bucketlist = Bucketlist.query.filter_by(owner_id=current_user.id, name=search).first()
+
+        if bucketlist:
+            allbucketlists_dict = {}
+            allbucketlists_dict['owner_id'] = bucketlist.owner_id
+            allbucketlists_dict['name'] = bucketlist.name
+            allbucketlists_dict['bucketlist_id'] = bucketlist.id
+            return jsonify(allbucketlists_dict)
+        return jsonify("Bucketlist not found")
+            
     names = Bucketlist.query.filter_by(owner_id=current_user.id).all()
     bucket_list =[]
     for name in  names:
@@ -149,7 +161,7 @@ def get_all_bucketlists(current_user):
 @app.route('/bucketlist/<bucketlistID>/items', methods=['POST'])
 @token_required
 def add_item(current_user, bucketlistID):
-    description = request.form.get('description')
+    description = request.json.get('description')
     if not description :
         res = {"msg": "Please provide the itemname"}
         return jsonify(res)
@@ -177,7 +189,7 @@ def delete_item(current_user, bucketlistID, itemID):
 @app.route('/bucketlist/<bucketlistID>/items/<itemID>', methods=['PUT'])
 @token_required
 def edit_item(current_user, bucketlistID, itemID):
-    newname = request.form.get('newname')
+    newname = request.json.get('newname')
     description = BucketlistItem.query.filter_by(id=itemID, bucketlist_id=bucketlistID).first()
     if not description:
         res = {"msg": "BucketlistItem not found"}
