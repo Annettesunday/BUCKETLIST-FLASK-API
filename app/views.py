@@ -59,17 +59,20 @@ def register_user():
 
 @app.route('/auth/login', methods=['POST'])
 def login():
+    """logs in registered users"""
     name = request.json.get('name')
     password = request.json.get('password')
+    #prevents login without user name and password
     if not name or not password:
         res = {"msg": "Please provide all the credentials"}
         return jsonify(res)
     else:
+        #fetch user records from db
         user = User.query.filter_by(name=name).first()
         if not user:
             res = {"msg": "User not available"}
             return jsonify(res)
-            
+          #generate token  
         if check_password_hash(user.password, password):
              token = jwt.encode({'name':name, 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)}, app.config['SECRET'])
              return jsonify({'token': token.decode('UTF-8')}), 202

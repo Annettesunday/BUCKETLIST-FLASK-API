@@ -3,6 +3,7 @@ import json
 
 
 class Registstration(BaseTestCase):
+    """class containing registration tests"""
     def test_register_new_user_successfully(self):
         """Tests for succesful registration of new users"""
         data = {
@@ -13,7 +14,7 @@ class Registstration(BaseTestCase):
         response = self.app.post(
             '/auth/register', data=json.dumps(data), follow_redirects=True,
             headers={'Content-Type': 'application/json'})
-
+       #ensures response code is 201
         self.assertEqual(201, response.status_code)
         response = response.data.decode('utf-8')
         self.assertIn('User added successfully', response)
