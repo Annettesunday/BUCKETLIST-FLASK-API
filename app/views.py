@@ -37,24 +37,30 @@ def token_required(k):
 
 @app.route('/auth/register', methods=['POST'])
 def register_user():
-    name = request.form.get('name')
-    email = request.form.get('email')
-    password = generate_password_hash(request.form.get('password'), method='sha256')
-    if not name or not password:
-        res = {"msg": "Please provide all the credentials"}
+    """Registers new users"""
+    user = request.get_json()
+    name = request.json.get('name')
+    email = request.json.get('email')
+    password = generate_password_hash(request.json.get('password'), method='sha256')
+    if 'name' and 'password' and 'email' not in user:
+        res = {"msg": "Please provide all the credentials"}, 400
         return jsonify(res)
     else:
+        user = User.query.filter_by(name=name).first()
+        if user:
+            res = {"error": "User name already exists.Try again with a different name"}, 400
+            return jsonify(res)
+
         user = User(name=name, email=email, password=password)
         db.session.add(user)
         db.session.commit()
-        res = {"msg": "User added successfully"}
-        return jsonify(res)
+        return jsonify({"msg": "User added successfully"}), 201
 
 
 @app.route('/auth/login', methods=['POST'])
 def login():
-    name = request.form.get('name')
-    password = request.form.get('password')
+    name = request.json.get('name')
+    password = request.json.get('password')
     if not name or not password:
         res = {"msg": "Please provide all the credentials"}
         return jsonify(res)
@@ -67,11 +73,13 @@ def login():
         if check_password_hash(user.password, password):
              token = jwt.encode({'name':name, 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)}, app.config['SECRET'])
              return jsonify({'token': token.decode('UTF-8')}), 202
+        else:
+            return jsonify({"msg": "wrong password"})
 
 @app.route('/bucketlist', methods=['POST'])
 @token_required
 def create_bucketlist(current_user):
-    name = request.form.get('name')
+    name = request.json.get('name')
     if not name :
         res = {"msg": "Please provide the bucketlistname"}
         return jsonify(res)
@@ -164,6 +172,26 @@ def delete_item(current_user, bucketlistID, itemID):
         db.session.commit()
         res = {"msg": "You have deleted a bucketlistitem successfully"}
         return jsonify(res)
+
+
+@app.route('/bucketlist/<bucketlistID>/items/<itemID>', methods=['PUT'])
+@token_required
+def edit_item(current_user, bucketlistID, itemID):
+    newname = request.form.get('newname')
+    description = BucketlistItem.query.filter_by(id=itemID, bucketlist_id=bucketlistID).first()
+    if not description:
+        res = {"msg": "BucketlistItem not found"}
+        return jsonify(res)
+    else:
+        description.description = newname
+        db.session.commit()
+        res = {"msg": "Bucketlistitem has been updated"}
+        return jsonify(res), 200
+
+
+
+
+
 
 
 
