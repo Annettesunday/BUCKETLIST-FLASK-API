@@ -202,13 +202,3 @@ def edit_item(current_user, bucketlistID, itemID):
         db.session.commit()
         res = {"msg": "Bucketlistitem has been updated"}
         return jsonify(res), 200
-
-
-
-
-
-
-
-
-    
-
