@@ -71,7 +71,7 @@ class Bucketlist(BaseTestCase):
         response = self.app.delete('/bucketlist/1', headers=dict(
             user_token=[user_token]))
         self.assertIn(b'You have deleted a bucketlist successfully', response.data)
-
+    
 
 
     
