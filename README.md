@@ -7,18 +7,19 @@ Features
 
 User should be able to register and login
 
-User should be able to create a Bucketlist.
-User should be able to add activities to a bucketlist.
-User should be able to edit and delete bucketlists.
-User should be able to edit and delete bucketlist activities
+User should be able to create a Bucketlist
+
+User should be able to add itemsto a bucketlist
+
+User should be able to edit and delete bucketlists
+
+User should be able to edit and delete bucketlist items
 
 
 Getting Started
-
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
 Prerequisites
-
 Python 2.7 Comes inbuilt for unix but can also be downloaded from Python downloads
 Installing
 
@@ -26,7 +27,6 @@ Clone this repo from github by running: with ssh:
 
 $ git clone git@github.com:Annettesunday/BUCKETLIST-FLASK-API
 with http:
-
 $ git clone https://github.com/Annettesunday/BUCKETLIST-FLASK-API.git
 Set up a virtual environment for the project and install the dependencies
 
