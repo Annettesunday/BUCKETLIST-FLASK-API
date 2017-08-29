@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/Annettesunday/BUCKETLIST-FLASK-API.svg?branch=develop)](https://travis-ci.org/Annettesunday/BUCKETLIST-FLASK-API) [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [![Coverage Status](https://coveralls.io/repos/github/Annettesunday/BUCKETLIST-FLASK-API/badge.svg?branch=develop)](https://coveralls.io/github/Annettesunday/BUCKETLIST-FLASK-API?branch=develop) [![Code Health](https://landscape.io/github/Annettesunday/BUCKETLIST-FLASK-API/develop/landscape.svg?style=flat)](https://landscape.io/github/Annettesunday/BUCKETLIST-FLASK-API/develop)
+[![Build Status](https://travis-ci.org/Annettesunday/BUCKETLIST-FLASK-API.svg?branch=develop)](https://travis-ci.org/Annettesunday/BUCKETLIST-FLASK-API) [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [![Coverage Status](https://coveralls.io/repos/github/Annettesunday/BUCKETLIST-FLASK-API/badge.svg?branch=feature-coverage)](https://coveralls.io/github/Annettesunday/BUCKETLIST-FLASK-API?branch=develop) [![Code Health](https://landscape.io/github/Annettesunday/BUCKETLIST-FLASK-API/develop/landscape.svg?style=flat)](https://landscape.io/github/Annettesunday/BUCKETLIST-FLASK-API/develop)
 Introduction
 
 What would you like to do in the next few years? Climb a mountain? Learn to ride a bike? :) It’s important to keep track of what you have already done and what you are yet to achieve. Register and start tracking.
@@ -75,7 +75,7 @@ URL Endpoint	HTTP Methods	Summary
 
 /bucketlist/<id>/items/<item_id>	DELETE	Delete a item in a bucket list
 
-/bucketlist/<id>/items/<item_id>	PUT	update a bucket list item details
+/bucketlists/<id>/items/<item_id>	PUT	update a bucket list item details
 Running the tests
 
  They can be run by the command
