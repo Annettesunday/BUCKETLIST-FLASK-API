@@ -36,8 +36,7 @@ Running the project locally
 
 Create a .env file in the root directory and save it. It should contain your secret key stored under the variable SECRET which will be used to secure your data.
 
-Innitialize the database
-
+Initialize the database
 $ python manage.py db init
 Create  migrations folder
 
@@ -49,7 +48,6 @@ Push all migrations to the database
 
 
 URL endpoints
-
 The following endpoints are provided
 
 URL Endpoint	HTTP Methods	Summary
@@ -64,9 +62,8 @@ URL Endpoint	HTTP Methods	Summary
 /bucketlist/<id>/items/	POST	Create items in a bucket list
 /bucketlist/<id>/items/<item_id>/	DELETE	Delete a item in a bucket list
 /bucketlist/<id>/items/<item_id>/	PUT	update a bucket list item details
-Running the tests
 
-Tests are done using python nosetests. They can be run by the command
+Running the tests
 
 python manage.py test
 This command also provides test coverage results.
@@ -77,8 +74,8 @@ Built With
 
 Python - A verstile programming language
 Flask - A multipurpose python web framework
-Contributing
 
+Contributing
 Contributions are open, fork the repository and make a pull requestwith the changes which will be reviewed before merging on approval.
 
 Authors
