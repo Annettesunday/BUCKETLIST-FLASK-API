@@ -55,17 +55,27 @@ URL endpoints
 The following endpoints are provided
 
 URL Endpoint	HTTP Methods	Summary
+
 /auth/register	POST	Register a new user
+
 /auth/login	POST	Login and retrieve token
+
 /bucketlist	POST	Create a new Bucketlist
+
 /bucketlist	GET	Retrieve all bucketlists for user
-/bucketlists/?q=bucket	GET	Match bucketlist by name
+
+/bucketlist/?q=bucket	GET	Match bucketlist by name
+
 /bucketlists/<id>	GET	Retrieve bucket list details
-/bucketlists/<id>	PUT	Update bucket list details
-/bucketlists/<id>	DELETE	Delete a bucket list
-/bucketlists/<id>/items	POST	Create items in a bucket list
-/bucketlists/<id>/items/<item_id>	DELETE	Delete a item in a bucket list
-/bucketlists/<id>/items/<item_id>	PUT	update a bucket list item details
+
+/bucketlist/<id>	PUT	Update bucket list details
+
+/bucketlist/<id>	DELETE	Delete a bucket list
+/bucketlist/<id>/items	POST	Create items in a bucket list
+
+/bucketlist/<id>/items/<item_id>	DELETE	Delete a item in a bucket list
+
+/bucketlist/<id>/items/<item_id>	PUT	update a bucket list item details
 Running the tests
 
  They can be run by the command
@@ -77,6 +87,7 @@ The tests make use of HTTP response codes to ensure users are getting the expect
 Built With
 
 Python - A verstile programming language
+
 Flask - A multipurpose python web framework
 Contributing
 
@@ -92,4 +103,5 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 Acknowledgments
 
 Several Andela Fellows consulted during development
+
 Facilitators
