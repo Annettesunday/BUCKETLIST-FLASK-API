@@ -135,7 +135,7 @@ def get_bucketlist(current_user, bucketlistID):
         bucketlist_dict['name'] = name.name
         return jsonify(bucketlist_dict)
 
-@app.route('/bucketlist', methods=['GET'])
+@app.route('/bucketlist/', methods=['GET'])
 @token_required
 def get_all_bucketlists(current_user):
     search = request.args.get("q")
@@ -149,7 +149,31 @@ def get_all_bucketlists(current_user):
             allbucketlists_dict['bucketlist_id'] = bucketlist.id
             return jsonify(allbucketlists_dict)
         return jsonify("Bucketlist not found")
-            
+    url = "/bucketlist/"
+    
+    limit = request.args.get("limit")       
+    if limit and int(limit) < 10:
+        limit = int(request.args.get("limit"))
+    else:
+        limit = 10
+
+    if request.args.get("page"):
+        page = int(request.args.get("page"))
+    else:
+        page = 1
+    bucketlist = Bucketlist.query.filter_by(owner_id=current_user.id).paginate(page, limit, False)
+
+    if bucketlist.has_next:
+        next_page = url + '?page=' + str(page + 1) + '&limit=' + str(limit)
+    else:
+        next_page = ""
+    if bucketlist.has_next:
+        next_page = url + '?page=' + str(page - 1) + '&limit=' + str(limit)
+    else:
+        previous_page = ""
+
+    
+
     names = Bucketlist.query.filter_by(owner_id=current_user.id).all()
     bucket_list =[]
     for name in  names:
@@ -202,6 +226,8 @@ def edit_item(current_user, bucketlistID, itemID):
         db.session.commit()
         res = {"msg": "Bucketlistitem has been updated"}
         return jsonify(res), 200
+
+
 
 
 
