@@ -29,13 +29,13 @@ class TokenTests(BaseTestCase):
     """Tests for token"""
     def test_invalidtoken_fails(self):
         '''Invalid token does not work'''
-        response = self.app.get('/bucketlist', headers=dict(
+        response = self.app.get('/bucketlist/', headers=dict(
         user_token=['wrongtoken']))
         self.assertIn('Token is invalid', response.data)
 
     def test_tokenmissing_fails(self):
         """Token missing fails"""
-        response = self.app.get('/bucketlist')
+        response = self.app.get('/bucketlist/')
         self.assertIn('Token is missing', response.data)
 
 if __name__ == '__main__':
