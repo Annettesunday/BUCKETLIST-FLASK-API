@@ -26,7 +26,8 @@ class Bucketlist(db.Model):
     owner_id = db.Column(db.Integer, db.ForeignKey('users.id')) #has to be similar to the table name that it's coming from
     items = db.relationship('BucketlistItem', backref='bucketlist', lazy='dynamic')
 
-    def __init__(self, name):
+    def __init__(self, name, owner_id):
+        self.owner_id = owner_id
         self.name = name
 
     def __repr__(self):
@@ -40,8 +41,9 @@ class BucketlistItem(db.Model):
     description = db.Column(db.String(225))
     bucketlist_id = db.Column(db.Integer, db.ForeignKey('bucketlists.id'))
 
-    def __init__(self, description):
+    def __init__(self, description, bucketlist_id):
         self.description = description
+        self.bucketlist_id = bucketlist_id
 
     def __repr__(self):
         return '<Item %r belongs to>' % (self.title)

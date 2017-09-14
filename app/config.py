@@ -3,7 +3,7 @@ class Config(object):
     DEBUG = False
     CSRF_ENABLED = True
     SECRET = ('SECRET')
-    SQLALCHEMY_DATABASE_URI =('postgresql://postgres:admin@localhost/flask_api')
+    SQLALCHEMY_DATABASE_URI = ('postgresql://postgres:admin@localhost/flask_api')
 
 class DevelopmentConfig(Config):
     """Configurations for Development."""
@@ -12,7 +12,9 @@ class DevelopmentConfig(Config):
 class TestingConfig(Config):
     """Configurations for Testing, with a separate test database."""
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = ('postgresql://localhost/test_db')
+    #SQLALCHEMY_DATABASE_URI = ('postgres://ngecmlsgrrynmx:ba058d0a2414845849475e39c509a3c926895939ed7b0e1ceae23424a840e42d@ec2-54-163-227-202.compute-1.amazonaws.com:5432/d8jag19naeqkn6')
+    SQLALCHEMY_DATABASE_URI = ('postgresql://postgres:admin@localhost/test_db')
+    
     DEBUG = True
 
 class StagingConfig(Config):

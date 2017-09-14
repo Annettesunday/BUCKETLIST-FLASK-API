@@ -1,12 +1,11 @@
 from flask import Flask
 
 from flask_sqlalchemy import SQLAlchemy
-from app import config
+from config import ProductionConfig
 
 app = Flask(__name__)
-app.config.from_object(config.ProductionConfig)
+app.config.from_object(ProductionConfig)
 db = SQLAlchemy(app)
-
 
 
 from app import views

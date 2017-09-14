@@ -1,4 +1,8 @@
 Venv/
 migrations/
 .env
-*.pyc
+.cache/
+__pycache__/
+*.py[cod]
+*$py.class 
+.vscode/
